@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(path = "/question")
+@RequestMapping(path = "/questions")
 public class QuestionController {
+    // https://restfulapi.net/resource-naming/
 
-    @GetMapping(path = "/list")
+    @GetMapping
     public String getQuestions(HttpServletRequest httpServletRequest) {
         return "QWERTY";
     }
