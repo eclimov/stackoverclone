@@ -1,0 +1,14 @@
+--DROP TABLE IF EXISTS users;
+--DROP TABLE IF EXISTS questions;
+--
+--CREATE TABLE users (
+--  id BIGINT NOT NULL AUTO_INCREMENT,
+--  name VARCHAR(255) NOT NULL
+--);
+--
+--CREATE TABLE questions (
+--  id BIGINT NOT NULL AUTO_INCREMENT,
+--  user_id BIGINT NOT NULL
+--);
+INSERT INTO users(name)
+VALUES('test');
