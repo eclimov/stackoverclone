@@ -26,7 +26,6 @@ public class QuestionController {
         userData.getId();
         */
 
-
         return id;
     }
 }
