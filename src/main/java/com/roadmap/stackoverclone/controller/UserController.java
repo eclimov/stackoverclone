@@ -17,9 +17,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserData> create(@RequestBody UserData userData) {
         // TODO: move this to converter
-        User user = User.builder()
-                .name(userData.getName())
-                .build();
+        User user = new User()
+                .setName(userData.getName());
 
         // TODO: move this to service/repository
         entityManager.persist(user);
@@ -39,10 +38,9 @@ public class UserController {
         // TODO: handle 'NOT FOUND' case
 
         // TODO: move this to converter
-        UserData userData = UserData.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .build();
+        UserData userData = new UserData()
+                .setId(user.getId())
+                .setName(user.getName());
 
         return ResponseEntity.ok(userData);
     }

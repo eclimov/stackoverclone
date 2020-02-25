@@ -1,14 +1,10 @@
 package com.roadmap.stackoverclone.model.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-@Builder // Use Lombok builder vs chained setters (to avoid calling 'builder()' and 'build()' methods) ?
 @Getter
-@Setter
 @Validated
 public class UserData {
   @JsonProperty("id")
@@ -16,4 +12,14 @@ public class UserData {
 
   @JsonProperty("name")
   private String name = null;
+
+  public UserData setId(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  public UserData setName(String name) {
+    this.name = name;
+    return this;
+  }
 }
