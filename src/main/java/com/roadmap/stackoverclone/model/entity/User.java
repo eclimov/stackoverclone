@@ -1,17 +1,14 @@
 package com.roadmap.stackoverclone.model.entity;
 
+import lombok.Builder;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
