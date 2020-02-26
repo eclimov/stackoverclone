@@ -1,14 +1,12 @@
---DROP TABLE IF EXISTS users;
---DROP TABLE IF EXISTS questions;
---
---CREATE TABLE users (
---  id BIGINT NOT NULL AUTO_INCREMENT,
---  name VARCHAR(255) NOT NULL
---);
---
---CREATE TABLE questions (
---  id BIGINT NOT NULL AUTO_INCREMENT,
---  user_id BIGINT NOT NULL
---);
 INSERT INTO users(name)
-VALUES('test');
+VALUES('u1');
+INSERT INTO users(name)
+VALUES('u2');
+
+INSERT INTO questions(text, user_id)
+VALUES('my first question', 1);
+INSERT INTO questions(text, user_id)
+VALUES('my second question', 1);
+
+INSERT INTO answers(text, question_id, user_id)
+VALUES('my first answer', 1, 2);

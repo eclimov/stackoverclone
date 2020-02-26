@@ -25,4 +25,12 @@ public class User extends BaseEntity {
         this.questions.add(question);
         return this;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Answer> answers = new HashSet<>();
+
+    public User addAnswer(Answer answer) {
+        this.answers.add(answer);
+        return this;
+    }
 }

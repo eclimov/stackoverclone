@@ -10,6 +10,14 @@ import java.util.Set;
 @Entity
 @Table(name = "questions")
 public class Question extends BaseEntity {
+  @Column(name = "text")
+  private String text;
+
+  public Question setText(String text) {
+    this.text = text;
+    return this;
+  }
+
   @ManyToOne
   @JoinColumn(name="user_id", nullable=false)
   private User user;
