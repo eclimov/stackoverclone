@@ -2,27 +2,23 @@ package com.roadmap.stackoverclone.controller;
 
 import com.roadmap.stackoverclone.model.data.UserData;
 import com.roadmap.stackoverclone.model.entity.User;
+import com.roadmap.stackoverclone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityManager;
 
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
     @Autowired
-    private EntityManager entityManager;
+    private UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<UserData> create(@RequestBody UserData userData) {
-        // TODO: move this to converter
-        User user = new User()
-                .setName(userData.getName());
-
-        // TODO: move this to service/repository
-        entityManager.persist(user);
-        entityManager.flush();
+        User user = this.userRepository.save(
+                new User()
+                        .setName(userData.getName())
+        );
 
         // TODO: move this to converter
         userData.setId(user.getId());
@@ -33,7 +29,8 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserData> find(@PathVariable("id") Long id) {
         // TODO: move this to service/repository
-        User user = entityManager.find(User.class, id);
+        User user = userRepository.findById(id)
+                .orElse(null);
 
         // TODO: handle 'NOT FOUND' case
 
