@@ -15,6 +15,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserData> create(@RequestBody UserData userData) {
+        // TODO: move this to service
         User user = this.userRepository.save(
                 new User()
                         .setName(userData.getName())
@@ -28,7 +29,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserData> find(@PathVariable("id") Long id) {
-        // TODO: move this to service/repository
+        // TODO: move this to service
         User user = userRepository.findById(id)
                 .orElse(null);
 
