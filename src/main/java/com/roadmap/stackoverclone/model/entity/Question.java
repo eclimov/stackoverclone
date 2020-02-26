@@ -9,15 +9,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "questions")
-public class Question extends BaseEntity {
-  @Column(name = "text")
-  private String text;
-
-  public Question setText(String text) {
-    this.text = text;
-    return this;
-  }
-
+public class Question extends BaseTextEntity {
   @ManyToOne
   @JoinColumn(name="user_id", nullable=false)
   private User user;

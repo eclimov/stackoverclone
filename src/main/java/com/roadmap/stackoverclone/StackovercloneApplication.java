@@ -9,6 +9,7 @@ public class StackovercloneApplication {
 	// https://www.youtube.com/watch?v=nGfeSo52_8A
 	// https://www.youtube.com/watch?v=BmBr5diz8WA&t=2988s
 	// Swagger: https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
+	/// Learn more about collections and O(n) notations
 
 	public static void main(String[] args) {
 		SpringApplication.run(StackovercloneApplication.class, args);
