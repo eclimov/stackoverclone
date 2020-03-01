@@ -1,17 +1,21 @@
 package com.roadmap.stackoverclone.model.entity;
 
-import lombok.Getter;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.Getter;
 
 @Getter
 @Entity
 @Table(name = "questions")
 public class Question extends BaseTextEntity {
   @ManyToOne
-  @JoinColumn(name="user_id", nullable=false)
+  @JoinColumn(name="user_id", nullable = false)
   private User user;
 
   public Question setUser(User user) {
