@@ -15,4 +15,3 @@
 14. Add user statistics - number of questions, rating
 
 Project should be generated on Spring Boot 2, using Maven or Gradle
-

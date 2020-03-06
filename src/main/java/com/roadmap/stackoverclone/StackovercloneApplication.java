@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class StackovercloneApplication {
 	// https://www.youtube.com/watch?v=nGfeSo52_8A
 	// https://www.youtube.com/watch?v=BmBr5diz8WA&t=2988s
+	// https://restfulapi.net/resource-naming/
 	// Swagger: https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
 	/// Learn more about collections and O(n) notations
 

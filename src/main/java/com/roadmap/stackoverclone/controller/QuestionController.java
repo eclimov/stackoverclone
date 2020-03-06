@@ -1,25 +1,36 @@
 package com.roadmap.stackoverclone.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.roadmap.stackoverclone.model.data.QuestionData;
+import com.roadmap.stackoverclone.service.impl.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/questions")
 public class QuestionController {
-    // https://restfulapi.net/resource-naming/
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping
-    public String get(HttpServletRequest httpServletRequest) {
-        return "QWERTY";
+    public ResponseEntity<List<QuestionData>> get() {
+        List<QuestionData> questionData = questionService.get();
+
+        return questionData.isEmpty() ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(questionData);
     }
 
     @GetMapping("/{id}")
-    public int find(@PathVariable("id") int id) {
-        return id;
+    public ResponseEntity<QuestionData> find(@PathVariable("id") Long id) {
+        QuestionData result = questionService.findById(id);
+        return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
-    // TODO: make sure question(child) is deleted if related user(parent) is deleted
+    // TODO: check whether this endpoint really works as expected
+    @PostMapping
+    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData) {
+        return ResponseEntity.ok(questionService.create(questionData));
+    }
 }
