@@ -2,17 +2,11 @@ package com.roadmap.stackoverclone.controller;
 
 import com.roadmap.stackoverclone.model.data.UserData;
 import com.roadmap.stackoverclone.service.impl.UserService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -24,8 +18,7 @@ public class UserController {
     public ResponseEntity<List<UserData>> get() {
         List<UserData> userData = userService.get();
 
-        return userData.isEmpty() ? ResponseEntity.notFound().build()
-            : ResponseEntity.ok(userData);
+        return ResponseEntity.ok(userData);
     }
 
     @GetMapping("/{id}")
@@ -44,9 +37,7 @@ public class UserController {
         @PathVariable("id") Long id,
         @RequestBody UserData userData
     ) {
-        return ResponseEntity.ok(
-            userService.update(id, userData)
-        );
+        return ResponseEntity.ok(userService.update(id, userData));
     }
 
     @DeleteMapping("/{id}")

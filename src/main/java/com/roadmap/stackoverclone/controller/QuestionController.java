@@ -18,8 +18,7 @@ public class QuestionController {
     public ResponseEntity<List<QuestionData>> get() {
         List<QuestionData> questionData = questionService.get();
 
-        return questionData.isEmpty() ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(questionData);
+        return ResponseEntity.ok(questionData);
     }
 
     @GetMapping("/{id}")
@@ -28,9 +27,22 @@ public class QuestionController {
         return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
-    // TODO: check whether this endpoint really works as expected
-    @PostMapping
-    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData) {
-        return ResponseEntity.ok(questionService.create(questionData));
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData, @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(questionService.create(questionData, userId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<QuestionData> update(
+            @PathVariable("id") Long id,
+            @RequestBody QuestionData questionData
+    ) {
+        return ResponseEntity.ok(questionService.update(id, questionData));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        return questionService.delete(id)
+                ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }
