@@ -13,6 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SpringFoxConfig {
     // http://localhost:8080/v2/api-docs
     // http://localhost:8080/swagger-ui.html
+    // TODO: add possibility to access Swagger in a secured application
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
