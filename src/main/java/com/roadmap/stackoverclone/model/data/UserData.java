@@ -11,15 +11,15 @@ public class UserData {
   private Long id = null;
 
   @JsonProperty("name")
-  private String name = null;
+  private String username = null;
 
   public UserData setId(Long id) {
     this.id = id;
     return this;
   }
 
-  public UserData setName(String name) {
-    this.name = name;
+  public UserData setUsername(String username) {
+    this.username = username;
     return this;
   }
 }

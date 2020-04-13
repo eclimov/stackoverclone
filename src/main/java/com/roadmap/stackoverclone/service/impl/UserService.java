@@ -5,12 +5,13 @@ import com.roadmap.stackoverclone.model.data.UserData;
 import com.roadmap.stackoverclone.model.entity.User;
 import com.roadmap.stackoverclone.repository.UserRepository;
 import com.roadmap.stackoverclone.service.IUserService;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -57,7 +58,7 @@ public class UserService implements IUserService {
   @Override
   public UserData update(Long id, UserData source) {
     User user =  userRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
-    user.setName(source.getName());
+    user.setUsername(source.getUsername());
     // TODO: potential improvement - user.setUpdateDateTime(Timestamp.valueOf(LocalDateTime.now()));
     userRepository.save(user);
 

@@ -1,25 +1,28 @@
 package com.roadmap.stackoverclone.model.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(name = "name")
-    private String name; // TODO: make this field unique
+    @Column(name = "username")
+    private String username; // TODO: make this field unique
 
-    public User setName(String name) {
-        this.name = name;
+    public User setUsername(String username) {
+        this.username = username;
         return this;
     }
+
+    @Column(name = "password")
+    @JsonIgnore
+    private String password;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Set<Question> questions = new HashSet<>();
@@ -36,4 +39,17 @@ public class User extends BaseEntity {
         this.answers.add(answer);
         return this;
     }
+
+
+    /**
+     * Roles are being eagerly loaded here because
+     * they are a fairly small collection of items for this example.
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private List<Role> roles;
 }

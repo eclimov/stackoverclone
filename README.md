@@ -8,7 +8,7 @@
 7. ✔ Edit answer
 8. Vote question
 9. Vote answer
-10. Bearer authentication 
+10. ✔ Bearer authentication 
 11. Add user roles (USER, ADMIN) (admin could delete/edit any question/answer, user only his own)
 12. Write unit tests on mockito
 13. ✔  Add swagger API documentation

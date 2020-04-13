@@ -11,6 +11,6 @@ public class UserDataConverter implements Converter<UserData, User> {
   @Override
   public User convert(UserData userData) {
     return new User()
-        .setName(userData.getName());
+        .setUsername(userData.getUsername());
   }
 }

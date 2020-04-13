@@ -4,6 +4,7 @@ import com.roadmap.stackoverclone.model.data.UserData;
 import com.roadmap.stackoverclone.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<List<UserData>> get() {
         List<UserData> userData = userService.get();
 

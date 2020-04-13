@@ -12,6 +12,6 @@ public class UserConverter implements Converter<User, UserData> {
   public UserData convert(User user) {
     return new UserData()
         .setId(user.getId())
-        .setName(user.getName());
+        .setUsername(user.getUsername());
   }
 }

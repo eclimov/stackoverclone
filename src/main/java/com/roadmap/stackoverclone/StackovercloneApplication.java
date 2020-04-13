@@ -12,6 +12,8 @@ public class StackovercloneApplication {
 	// Swagger: https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
 	/// Learn more about collections and O(n) notations
 
+	// oauth: https://medium.com/better-programming/secure-a-spring-boot-rest-api-with-json-web-token-reference-to-angular-integration-e57a25806c50
+
 	public static void main(String[] args) {
 		SpringApplication.run(StackovercloneApplication.class, args);
 	}
