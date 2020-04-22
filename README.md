@@ -1,4 +1,4 @@
-###Requeirements
+### Requirements
 1. ✔ List of the questions
 2. ✔ Add new question
 3. ✔ Delete Question
