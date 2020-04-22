@@ -19,13 +19,4 @@ public class Answer extends BaseTextEntity {
         this.question = question;
         return this;
     }
-
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
-
-    public Answer setUser(User user) {
-        this.user = user;
-        return this;
-    }
 }

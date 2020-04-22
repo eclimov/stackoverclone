@@ -7,11 +7,11 @@ import java.util.List;
 public interface IQuestionService {
     List<QuestionData> get();
 
-    QuestionData create(QuestionData source, Long userId);
+    QuestionData create(QuestionData source);
 
     QuestionData findById(Long id);
 
     QuestionData update(Long id, QuestionData source);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

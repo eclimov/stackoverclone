@@ -14,6 +14,8 @@ public class StackovercloneApplication {
 
 	// oauth: https://medium.com/better-programming/secure-a-spring-boot-rest-api-with-json-web-token-reference-to-angular-integration-e57a25806c50
 
+	// Voters: https://www.baeldung.com/spring-security-custom-voter
+
 	public static void main(String[] args) {
 		SpringApplication.run(StackovercloneApplication.class, args);
 	}

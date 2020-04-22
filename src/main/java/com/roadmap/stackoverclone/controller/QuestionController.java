@@ -27,9 +27,9 @@ public class QuestionController {
         return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData, @PathVariable("userId") Long userId) {
-        return ResponseEntity.ok(questionService.create(questionData, userId));
+    @PostMapping
+    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData) {
+        return ResponseEntity.ok(questionService.create(questionData));
     }
 
     @PutMapping("/{id}")
@@ -42,7 +42,7 @@ public class QuestionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        return questionService.delete(id)
-                ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        questionService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

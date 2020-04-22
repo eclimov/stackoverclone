@@ -29,7 +29,6 @@ public class AnswerController {
 
     @PostMapping("/question/{questionId}")
     public ResponseEntity<AnswerData> create(@RequestBody AnswerData answerData, @PathVariable("questionId") Long questionId) {
-        // TODO: extract user from access token header and send it as an argument in AnswerService::create
         return ResponseEntity.ok(answerService.create(answerData, questionId));
     }
 
@@ -43,7 +42,7 @@ public class AnswerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        return answerService.delete(id)
-                ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        answerService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

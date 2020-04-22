@@ -1,5 +1,6 @@
 package com.roadmap.stackoverclone.service.impl;
 
+import com.roadmap.stackoverclone.exception.ForbiddenException;
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
 import com.roadmap.stackoverclone.model.data.QuestionData;
 import com.roadmap.stackoverclone.model.entity.Question;
@@ -9,10 +10,10 @@ import com.roadmap.stackoverclone.repository.UserRepository;
 import com.roadmap.stackoverclone.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,10 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public QuestionData create(QuestionData source, Long userId) {
-        User user =  userRepository.findOneById(userId).orElseThrow(ResourceNotFoundException::new);
+    public QuestionData create(QuestionData source) {
+        User user =  userRepository.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ).orElseThrow(ResourceNotFoundException::new);
         Question question = conversionService.convert(source, Question.class);
         question.setUser(user);
 
@@ -55,6 +58,13 @@ public class QuestionService implements IQuestionService {
     @Override
     public QuestionData update(Long id, QuestionData source) {
         Question question =  questionRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
+        User user =  userRepository.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ).orElseThrow(ResourceNotFoundException::new);
+        if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
+            throw new ForbiddenException("You don't have access to edit this resource");
+        }
+
         question.setText(source.getText());
         // TODO: update list of answers here
         questionRepository.save(question);
@@ -64,13 +74,15 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        Optional<Question> question = questionRepository.findById(id);
-        if (question.isPresent()) {
-            questionRepository.delete(question.get());
-            return true;
+    public void delete(Long id) {
+        Question question =  questionRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
+        User user =  userRepository.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ).orElseThrow(ResourceNotFoundException::new);
+        if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
+            throw new ForbiddenException("You don't have access to edit this resource");
         }
 
-        return false;
+        questionRepository.delete(question);
     }
 }

@@ -40,7 +40,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/oauth/token/**",
                         consolePath + "/**"
                 ).permitAll()
-                .anyRequest().authenticated()  // A request should require authentication by default
+                // TODO: allow GET requests by unauthorized users
+                .anyRequest().hasAuthority("ROLE_USER") // Each request should by done by at least ROLE_USER
         ;
     }
 }

@@ -11,7 +11,6 @@ public class AnswerConverter implements Converter<Answer, AnswerData> {
     public AnswerData convert(Answer answer) {
         return new AnswerData()
                 .setId(answer.getId())
-                .setText(answer.getText())
-                .setUserId(answer.getUser().getId());
+                .setText(answer.getText());
     }
 }

@@ -13,5 +13,5 @@ public interface IAnswerService {
 
     AnswerData update(Long id, AnswerData source);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

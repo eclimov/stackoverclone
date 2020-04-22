@@ -10,9 +10,6 @@ public class AnswerData {
     @JsonProperty("id")
     Long id = null;
 
-    @JsonProperty("userId")
-    Long userId = null;
-
     @JsonProperty("text")
     String text;
 
@@ -23,11 +20,6 @@ public class AnswerData {
 
     public AnswerData setText(String text) {
         this.text = text;
-        return this;
-    }
-
-    public AnswerData setUserId(Long userId) {
-        this.userId = userId;
         return this;
     }
 }

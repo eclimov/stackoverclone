@@ -15,6 +15,8 @@ INSERT INTO questions(text, user_id)
 VALUES('my first question', 1);
 INSERT INTO questions(text, user_id)
 VALUES('my second question', 1);
+INSERT INTO questions(text, user_id)
+VALUES('my third question', 2);
 
 INSERT INTO answers(text, question_id, user_id)
 VALUES('question 1 user 2', 1, 2);
