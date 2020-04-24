@@ -14,4 +14,8 @@ public interface IAnswerService {
     AnswerData update(Long id, AnswerData source);
 
     void delete(Long id);
+
+    void voteUp(Long id);
+
+    void voteDown(Long id);
 }

@@ -4,8 +4,10 @@ import com.roadmap.stackoverclone.exception.ForbiddenException;
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
 import com.roadmap.stackoverclone.model.data.QuestionData;
 import com.roadmap.stackoverclone.model.entity.Question;
+import com.roadmap.stackoverclone.model.entity.RatingQuestion;
 import com.roadmap.stackoverclone.model.entity.User;
 import com.roadmap.stackoverclone.repository.QuestionRepository;
+import com.roadmap.stackoverclone.repository.RatingQuestionRepository;
 import com.roadmap.stackoverclone.repository.UserRepository;
 import com.roadmap.stackoverclone.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 public class QuestionService implements IQuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private RatingQuestionRepository ratingQuestionRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -84,5 +89,32 @@ public class QuestionService implements IQuestionService {
         }
 
         questionRepository.delete(question);
+    }
+
+    private RatingQuestion prepareRating(Long id) {
+        Question question = questionRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        User user =  userRepository.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ).orElseThrow(ResourceNotFoundException::new);
+
+        return ratingQuestionRepository.findOneByQuestionAndUser(question, user).orElse(
+                (new RatingQuestion())
+                        .setQuestion(question)
+                        .setUser(user)
+        );
+    }
+
+    @Override
+    public void voteUp(Long id) {
+        ratingQuestionRepository.save(
+                this.prepareRating(id).setValue(1)
+        );
+    }
+
+    @Override
+    public void voteDown(Long id) {
+        ratingQuestionRepository.save(
+                this.prepareRating(id).setValue(-1)
+        );
     }
 }

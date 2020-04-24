@@ -45,4 +45,16 @@ public class QuestionController {
         questionService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}/voteup")
+    public ResponseEntity<Void> voteUp(@PathVariable("id") Long id) {
+        questionService.voteUp(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/votedown")
+    public ResponseEntity<Void> voteDown(@PathVariable("id") Long id) {
+        questionService.voteDown(id);
+        return ResponseEntity.ok().build();
+    }
 }

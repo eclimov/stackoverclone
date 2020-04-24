@@ -10,7 +10,6 @@ public class QuestionDataConverter implements Converter<QuestionData, Question> 
     @Override
     public Question convert(QuestionData questionData) {
         return (Question) new Question()
-                // set user in service
                 .setText(questionData.getText());
     }
 }

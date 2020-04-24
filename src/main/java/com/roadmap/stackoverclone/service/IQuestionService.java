@@ -14,4 +14,8 @@ public interface IQuestionService {
     QuestionData update(Long id, QuestionData source);
 
     void delete(Long id);
+
+    void voteUp(Long id);
+
+    void voteDown(Long id);
 }
