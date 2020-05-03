@@ -2,6 +2,7 @@ package com.roadmap.stackoverclone.service.impl;
 
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
 import com.roadmap.stackoverclone.model.data.UserData;
+import com.roadmap.stackoverclone.model.data.UserStatisticsDataInterface;
 import com.roadmap.stackoverclone.model.entity.User;
 import com.roadmap.stackoverclone.repository.UserRepository;
 import com.roadmap.stackoverclone.service.IUserService;
@@ -64,5 +65,10 @@ public class UserService implements IUserService {
 
     return source
         .setId(user.getId());
+  }
+
+  @Override
+  public UserStatisticsDataInterface getUserStatistics(Long userId) {
+    return userRepository.getUserStatistics(userId).orElseThrow(ResourceNotFoundException::new);
   }
 }

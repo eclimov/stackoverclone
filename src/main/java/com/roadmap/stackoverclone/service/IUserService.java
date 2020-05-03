@@ -1,6 +1,8 @@
 package com.roadmap.stackoverclone.service;
 
 import com.roadmap.stackoverclone.model.data.UserData;
+import com.roadmap.stackoverclone.model.data.UserStatisticsDataInterface;
+
 import java.util.List;
 
 public interface IUserService {
@@ -13,4 +15,6 @@ public interface IUserService {
   UserData findById(Long id);
 
   UserData update(Long id, UserData source);
+
+  UserStatisticsDataInterface getUserStatistics(Long userId);
 }

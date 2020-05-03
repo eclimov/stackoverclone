@@ -1,6 +1,7 @@
 package com.roadmap.stackoverclone.controller;
 
 import com.roadmap.stackoverclone.model.data.UserData;
+import com.roadmap.stackoverclone.model.data.UserStatisticsDataInterface;
 import com.roadmap.stackoverclone.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,10 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         return userService.delete(id)
             ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/stats")
+    public ResponseEntity<UserStatisticsDataInterface> getStats(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.getUserStatistics(id));
     }
 }
