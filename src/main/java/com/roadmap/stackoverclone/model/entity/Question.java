@@ -13,6 +13,9 @@ import java.util.Set;
 @Entity
 @Table(name = "questions")
 public class Question extends BaseTextEntity {
+  @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.PERSIST)
+  private Set<RatingQuestion> ratings = new HashSet<>();
+
   @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
   private Set<Answer> answers = new HashSet<>();
 

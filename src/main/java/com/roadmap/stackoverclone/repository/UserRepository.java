@@ -16,38 +16,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByUsername(String username);
 
   @Query(
-          value = "SELECT " +
-                  "  u.id AS user_id, " +
-                  "  ISNULL(q_stats.q_count, 0) AS questionsCount, " +
-                  "  ISNULL(a_stats.a_count, 0) AS answersCount, " +
-                  "  ISNULL(q_stats.rating, 0) + ISNULL(a_stats.rating, 0) AS rating " +
-                  "FROM users AS u " +
-                  "LEFT JOIN ( " +
-                  "  SELECT " +
-                  "    COUNT(q.id) as q_count, " +
-                  "    SUM(rq.value) AS rating, " +
-                  "    q.user_id " +
-                  "  FROM questions q " +
-                  "  LEFT JOIN rating_question rq " +
-                  "  ON rq.question_id = q.id " +
-                  "  WHERE q.user_id = :userId " +
-                  "  GROUP BY q.user_id " +
-                  ") AS q_stats " +
-                  "ON q_stats.user_id = u.id " +
-                  "LEFT JOIN ( " +
-                  "  SELECT " +
-                  "    COUNT(a.id) as a_count, " +
-                  "    SUM(ra.value) AS rating, " +
-                  "    a.user_id " +
-                  "  FROM answers a " +
-                  "  LEFT JOIN rating_answer ra " +
-                  "  ON ra.answer_id = a.id " +
-                  "  WHERE a.user_id = :userId " +
-                  "  GROUP BY a.user_id " +
-                  ") AS a_stats " +
-                  "ON a_stats.user_id = u.id " +
-                  "WHERE u.id = :userId",
-          nativeQuery = true
+          "SELECT " +
+          "  (SELECT COUNT(*) FROM u.questions) AS questionsCount, " +
+          "  (SELECT COUNT(*) FROM u.answers) AS answersCount, " +
+          "  ISNULL((SELECT SUM(rq.value) FROM u.questions q INNER JOIN q.ratings rq), 0) + " +
+          "    ISNULL((SELECT SUM(ra.value) FROM u.answers a INNER JOIN a.ratings ra), 0) AS rating " +
+          "FROM User u " +
+          "WHERE u.id = :userId "
   )
   Optional<UserStatisticsDataInterface> getUserStatistics(@Param("userId") Long userId);
 }

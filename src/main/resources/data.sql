@@ -22,11 +22,11 @@ INSERT INTO questions(text, user_id)
 VALUES('my third question', 2);
 
 INSERT INTO answers(text, question_id, user_id)
-VALUES('question 1 user 2', 1, 2);
+VALUES('answer for question 1 user 2', 1, 2);
 INSERT INTO answers(text, question_id, user_id)
-VALUES('question 1 user 2', 1, 2);
+VALUES('answer for question 1 user 2', 1, 2);
 INSERT INTO answers(text, question_id, user_id)
-VALUES('question 2 user 2', 2, 2);
+VALUES('answer for question 2 user 2', 2, 2);
 
 INSERT INTO rating_question(value, question_id, user_id)
 VALUES(1, 1, 1);
