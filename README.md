@@ -13,5 +13,6 @@
 12. Write unit tests on mockito
 13. ✔ Add swagger API documentation
 14. ✔ Add user statistics - number of questions, rating
+15. Integrate Liquibase
 
 Project should be generated on Spring Boot 2, using Maven or Gradle
