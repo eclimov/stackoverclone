@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: stackoverclone-mysql
+    working_dir: /application
+    volumes:
+      - .:/application
+    environment:
+      - MYSQL_ROOT_PASSWORD=11
+      - MYSQL_DATABASE=stackoverclone
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=11
+    ports:
+      - 3306:3306
