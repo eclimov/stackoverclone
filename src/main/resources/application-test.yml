@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:stackoverclone
+    driverClassName: org.h2.Driver
+    data: classpath:db/data/fixtures.mysql.sql
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+  liquibase:
+    enabled: false

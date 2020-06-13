@@ -13,14 +13,14 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findOneById(Long id);
 
-  Optional<User> findByUsername(String username);
+  Optional<User> findTopByUsername(String username);
 
   @Query(
           "SELECT " +
           "  (SELECT COUNT(*) FROM u.questions) AS questionsCount, " +
           "  (SELECT COUNT(*) FROM u.answers) AS answersCount, " +
-          "  ISNULL((SELECT SUM(rq.value) FROM u.questions q INNER JOIN q.ratings rq), 0) + " +
-          "    ISNULL((SELECT SUM(ra.value) FROM u.answers a INNER JOIN a.ratings ra), 0) AS rating " +
+          "  IFNULL((SELECT SUM(rq.value) FROM u.questions q INNER JOIN q.ratings rq), 0) + " +
+          "    IFNULL((SELECT SUM(ra.value) FROM u.answers a INNER JOIN a.ratings ra), 0) AS rating " +
           "FROM User u " +
           "WHERE u.id = :userId "
   )

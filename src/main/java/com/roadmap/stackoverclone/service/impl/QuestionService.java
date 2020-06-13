@@ -1,5 +1,6 @@
 package com.roadmap.stackoverclone.service.impl;
 
+import com.roadmap.stackoverclone.configuration.IAuthenticationFacade;
 import com.roadmap.stackoverclone.exception.ForbiddenException;
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
 import com.roadmap.stackoverclone.model.data.QuestionData;
@@ -12,7 +13,6 @@ import com.roadmap.stackoverclone.repository.UserRepository;
 import com.roadmap.stackoverclone.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +32,9 @@ public class QuestionService implements IQuestionService {
     @Autowired
     private ConversionService conversionService;
 
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
+
     @Override
     public List<QuestionData> get() {
         return  questionRepository
@@ -42,8 +45,8 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public QuestionData create(QuestionData source) {
-        User user =  userRepository.findByUsername(
-                SecurityContextHolder.getContext().getAuthentication().getName()
+        User user =  userRepository.findTopByUsername(
+                authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
         Question question = conversionService.convert(source, Question.class);
         question.setUser(user);
@@ -63,8 +66,8 @@ public class QuestionService implements IQuestionService {
     @Override
     public QuestionData update(Long id, QuestionData source) {
         Question question =  questionRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
-        User user =  userRepository.findByUsername(
-                SecurityContextHolder.getContext().getAuthentication().getName()
+        User user =  userRepository.findTopByUsername(
+                authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
         if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
             throw new ForbiddenException("You don't have access to edit this resource");
@@ -81,8 +84,8 @@ public class QuestionService implements IQuestionService {
     @Override
     public void delete(Long id) {
         Question question =  questionRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
-        User user =  userRepository.findByUsername(
-                SecurityContextHolder.getContext().getAuthentication().getName()
+        User user =  userRepository.findTopByUsername(
+                authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
         if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
             throw new ForbiddenException("You don't have access to edit this resource");
@@ -93,8 +96,8 @@ public class QuestionService implements IQuestionService {
 
     private RatingQuestion prepareRating(Long id) {
         Question question = questionRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        User user =  userRepository.findByUsername(
-                SecurityContextHolder.getContext().getAuthentication().getName()
+        User user =  userRepository.findTopByUsername(
+                authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
 
         return ratingQuestionRepository.findOneByQuestionAndUser(question, user).orElse(

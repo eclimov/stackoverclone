@@ -10,7 +10,7 @@
 9. ✔ Vote answer
 10. ✔ Bearer authentication 
 11. ✔ Add user roles (USER, ADMIN) (admin could delete/edit any question/answer, user only his own)
-12. Write unit tests on mockito
+12. ✔ Write unit tests on mockito
 13. ✔ Add swagger API documentation
 14. ✔ Add user statistics - number of questions, rating
 15. ✔ Integrate Liquibase

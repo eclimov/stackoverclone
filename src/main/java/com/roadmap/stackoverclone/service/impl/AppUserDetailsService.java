@@ -22,7 +22,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(s).orElseThrow(ResourceNotFoundException::new);
+        User user = userRepository.findTopByUsername(s).orElseThrow(ResourceNotFoundException::new);
 
         if(user == null) {
             throw new UsernameNotFoundException(String.format("The username %s doesn't exist", s));

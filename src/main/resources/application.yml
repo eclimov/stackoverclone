@@ -33,3 +33,6 @@ security:
     scope-read: read
     scope-write: write
     resource-ids: jwtresourceid
+
+liquibase:
+  change-log: classpath:/db/changelog/db.changelog-master.yaml
