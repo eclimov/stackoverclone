@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.roadmap.stackoverclone.configuration.ProfileConstants;
+import com.roadmap.stackoverclone.constant.ProfileConstants;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,23 +98,23 @@ public abstract class ControllerTest {
     }
 
     @Test
-    public abstract void _create() throws Exception;
+    public abstract void create() throws Exception;
 
     @Test
-    public abstract void _update() throws Exception;
+    public abstract void update() throws Exception;
 
     @Test
-    public abstract void _delete() throws Exception;
+    public abstract void delete() throws Exception;
 
     @Test
-    public abstract void _deleteNonexistent() throws Exception;
+    public abstract void deleteNonexistent() throws Exception;
 
     @Test
-    public abstract void _find() throws Exception;
+    public abstract void find() throws Exception;
 
     @Test
-    public abstract void _findNonexistent() throws Exception;
+    public abstract void findNonexistent() throws Exception;
 
     @Test
-    public abstract void _get() throws Exception;
+    public abstract void get() throws Exception;
 }

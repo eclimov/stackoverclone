@@ -1,5 +1,6 @@
 package com.roadmap.stackoverclone.configuration;
 
+import com.roadmap.stackoverclone.constant.RoleConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         consolePath + "/**"
                 ).permitAll()
                 // TODO: allow GET requests by unauthorized users
-                .anyRequest().hasAuthority("ROLE_USER") // Each request should by done by at least ROLE_USER
+                .anyRequest().hasAuthority(RoleConstants.USER) // Each request should by done by at least ROLE_USER
         ;
     }
 }

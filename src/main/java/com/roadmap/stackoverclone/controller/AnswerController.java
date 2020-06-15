@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone.controller;
 
-import com.roadmap.stackoverclone.model.data.AnswerData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.service.impl.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,27 +15,27 @@ public class AnswerController {
     private AnswerService answerService;
 
     @GetMapping("/question/{questionId}")
-    public ResponseEntity<List<AnswerData>> get(@PathVariable("questionId") Long questionId) {
-        List<AnswerData> answerData = answerService.findByQuestionId(questionId);
+    public ResponseEntity<List<TextData>> get(@PathVariable("questionId") Long questionId) {
+        List<TextData> answerData = answerService.findByQuestionId(questionId);
 
         return ResponseEntity.ok(answerData);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnswerData> find(@PathVariable("id") Long id) {
-        AnswerData result = answerService.findById(id);
+    public ResponseEntity<TextData> find(@PathVariable("id") Long id) {
+        TextData result = answerService.findById(id);
         return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
     @PostMapping("/question/{questionId}")
-    public ResponseEntity<AnswerData> create(@RequestBody AnswerData answerData, @PathVariable("questionId") Long questionId) {
+    public ResponseEntity<TextData> create(@RequestBody TextData answerData, @PathVariable("questionId") Long questionId) {
         return ResponseEntity.ok(answerService.create(answerData, questionId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnswerData> update(
+    public ResponseEntity<TextData> update(
             @PathVariable("id") Long id,
-            @RequestBody AnswerData answerData
+            @RequestBody TextData answerData
     ) {
         return ResponseEntity.ok(answerService.update(id, answerData));
     }

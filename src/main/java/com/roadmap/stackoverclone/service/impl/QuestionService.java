@@ -1,9 +1,8 @@
 package com.roadmap.stackoverclone.service.impl;
 
 import com.roadmap.stackoverclone.configuration.IAuthenticationFacade;
-import com.roadmap.stackoverclone.exception.ForbiddenException;
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
-import com.roadmap.stackoverclone.model.data.QuestionData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.model.entity.Question;
 import com.roadmap.stackoverclone.model.entity.RatingQuestion;
 import com.roadmap.stackoverclone.model.entity.User;
@@ -14,11 +13,13 @@ import com.roadmap.stackoverclone.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Validated
 public class QuestionService implements IQuestionService {
     @Autowired
     private QuestionRepository questionRepository;
@@ -36,15 +37,15 @@ public class QuestionService implements IQuestionService {
     private IAuthenticationFacade authenticationFacade;
 
     @Override
-    public List<QuestionData> get() {
+    public List<TextData> get() {
         return  questionRepository
                 .findAll().stream()
-                .map(e -> conversionService.convert(e, QuestionData.class))
+                .map(e -> conversionService.convert(e, TextData.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public QuestionData create(QuestionData source) {
+    public TextData create(TextData source) {
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
@@ -56,22 +57,19 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public QuestionData findById(Long id) {
+    public TextData findById(Long id) {
         return conversionService.convert(
                 questionRepository.findById(id).orElse(null),
-                QuestionData.class
+                TextData.class
         );
     }
 
     @Override
-    public QuestionData update(Long id, QuestionData source) {
+    public TextData update(Long id, TextData source) {
         Question question =  questionRepository.findOneById(id).orElseThrow(ResourceNotFoundException::new);
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
-        if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
-            throw new ForbiddenException("You don't have access to edit this resource");
-        }
 
         question.setText(source.getText());
         // TODO: update list of answers here
@@ -87,9 +85,6 @@ public class QuestionService implements IQuestionService {
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
-        if (!(question.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
-            throw new ForbiddenException("You don't have access to edit this resource");
-        }
 
         questionRepository.delete(question);
     }

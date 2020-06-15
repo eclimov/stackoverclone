@@ -1,9 +1,8 @@
 package com.roadmap.stackoverclone.service.impl;
 
 import com.roadmap.stackoverclone.configuration.IAuthenticationFacade;
-import com.roadmap.stackoverclone.exception.ForbiddenException;
 import com.roadmap.stackoverclone.exception.ResourceNotFoundException;
-import com.roadmap.stackoverclone.model.data.AnswerData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.model.entity.Answer;
 import com.roadmap.stackoverclone.model.entity.Question;
 import com.roadmap.stackoverclone.model.entity.RatingAnswer;
@@ -41,25 +40,25 @@ public class AnswerService implements IAnswerService {
     private IAuthenticationFacade authenticationFacade;
 
     @Override
-    public List<AnswerData> findByQuestionId(Long questionId) {
+    public List<TextData> findByQuestionId(Long questionId) {
         Question question = questionRepository.findOneById(questionId).orElseThrow(ResourceNotFoundException::new);
 
         return  answerRepository
                 .findByQuestion(question).stream()
-                .map(e -> conversionService.convert(e, AnswerData.class))
+                .map(e -> conversionService.convert(e, TextData.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public AnswerData findById(Long id) {
+    public TextData findById(Long id) {
         return conversionService.convert(
                 answerRepository.findById(id).orElse(null),
-                AnswerData.class
+                TextData.class
         );
     }
 
     @Override
-    public AnswerData create(AnswerData source, Long questionId) {
+    public TextData create(TextData source, Long questionId) {
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
@@ -73,15 +72,11 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
-    public AnswerData update(Long id, AnswerData source) {
+    public TextData update(Long id, TextData source) {
         Answer answer = answerRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
-        if (!(answer.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
-            throw new ForbiddenException("You don't have access to edit this resource");
-        }
-
 
         answer.setText(source.getText());
         answerRepository.save(answer);
@@ -96,9 +91,6 @@ public class AnswerService implements IAnswerService {
         User user =  userRepository.findTopByUsername(
                 authenticationFacade.getAuthentication().getName()
         ).orElseThrow(ResourceNotFoundException::new);
-        if (!(answer.getUser().getId().equals(user.getId()) || user.hasRole("ROLE_ADMIN"))) {
-            throw new ForbiddenException("You don't have access to edit this resource");
-        }
 
         answerRepository.delete(answer);
     }

@@ -1,13 +1,15 @@
 package com.roadmap.stackoverclone.controller;
 
-import com.roadmap.stackoverclone.model.data.AnswerData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class AnswerControllerTest extends ControllerTest {
@@ -18,15 +20,15 @@ public class AnswerControllerTest extends ControllerTest {
     private Long idExisting = 1L;
     private Long idNonexisting = 44L;
 
-    public AnswerData createData() {
-        return new AnswerData()
+    public TextData createData() {
+        return new TextData()
                 .setText("my new text?")
                 ;
     }
 
     @Override
-    public void _create() throws Exception {
-        AnswerData data = this.createData();
+    public void create() throws Exception {
+        TextData data = this.createData();
         String json = this.generateJson(data);
 
         mockSecurityAsUser("admin.admin");
@@ -44,12 +46,12 @@ public class AnswerControllerTest extends ControllerTest {
     }
 
     @Override
-    public void _update() throws Exception {
-        AnswerData data = this.createData();
+    public void update() throws Exception {
+        TextData data = this.createData();
         String json = this.generateJson(data);
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
@@ -71,7 +73,7 @@ public class AnswerControllerTest extends ControllerTest {
         ;
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.id", is(idExisting.intValue())))
@@ -80,32 +82,32 @@ public class AnswerControllerTest extends ControllerTest {
     }
 
     @Override
-    public void _delete() throws Exception {
+    public void delete() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
-                .perform(delete(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.delete(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
         ;
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _deleteNonexistent() throws Exception {
+    public void deleteNonexistent() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
-                .perform(delete(baseUrl + "/{id}", idNonexisting))
+                .perform(MockMvcRequestBuilders.delete(baseUrl + "/{id}", idNonexisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _find() throws Exception {
+    public void find() throws Exception {
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
@@ -115,17 +117,17 @@ public class AnswerControllerTest extends ControllerTest {
     }
 
     @Override
-    public void _findNonexistent() throws Exception {
+    public void findNonexistent() throws Exception {
         mockMvc
-                .perform(get(baseUrl + "/{id}", idNonexisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idNonexisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _get() throws Exception {
+    public void get() throws Exception {
         ResultActions resultActions = mockMvc
-                .perform(get(baseUrl + "/question/{questionId}", idQuestionExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/question/{questionId}", idQuestionExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -135,7 +137,7 @@ public class AnswerControllerTest extends ControllerTest {
     }
 
     @Test
-    public void _voteUp() throws Exception {
+    public void voteUp() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
                 .perform(
@@ -147,7 +149,7 @@ public class AnswerControllerTest extends ControllerTest {
     }
 
     @Test
-    public void _voteDown() throws Exception {
+    public void voteDown() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
                 .perform(

@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone.converter.data;
 
-import com.roadmap.stackoverclone.model.data.QuestionData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.model.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class QuestionDataConverterTest {
 
         String text = "some question text ?";
 
-        QuestionData questionData = (new QuestionData())
+        TextData questionData = (new TextData())
                 .setText(text);
         Question question = questionDataConverter.convert(questionData);
 

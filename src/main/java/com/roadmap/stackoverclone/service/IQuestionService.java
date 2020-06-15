@@ -1,18 +1,23 @@
 package com.roadmap.stackoverclone.service;
 
-import com.roadmap.stackoverclone.model.data.QuestionData;
+
+import com.roadmap.stackoverclone.constant.EntityConstants;
+import com.roadmap.stackoverclone.constraint.VerifyRightsParameters;
+import com.roadmap.stackoverclone.model.data.TextData;
 
 import java.util.List;
 
 public interface IQuestionService {
-    List<QuestionData> get();
+    List<TextData> get();
 
-    QuestionData create(QuestionData source);
+    TextData create(TextData source);
 
-    QuestionData findById(Long id);
+    TextData findById(Long id);
 
-    QuestionData update(Long id, QuestionData source);
+    @VerifyRightsParameters(objectType = EntityConstants.TYPE_QUESTIONS)
+    TextData update(Long id, TextData source);
 
+    @VerifyRightsParameters(objectType = EntityConstants.TYPE_QUESTIONS)
     void delete(Long id);
 
     void voteUp(Long id);

@@ -6,19 +6,19 @@ import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Validated
-public class AnswerData {
+public class TextData {
     @JsonProperty("id")
     Long id = null;
 
     @JsonProperty("text")
     String text;
 
-    public AnswerData setId(Long id) {
+    public TextData setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public AnswerData setText(String text) {
+    public TextData setText(String text) {
         this.text = text;
         return this;
     }

@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone.converter.data;
 
-import com.roadmap.stackoverclone.model.data.AnswerData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.model.entity.Answer;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class AnswerDataConverterTest {
 
         String text = "some answer text";
 
-        AnswerData answerData = (new AnswerData())
+        TextData answerData = (new TextData())
                 .setText(text);
         Answer answer = answerDataConverter.convert(answerData);
 

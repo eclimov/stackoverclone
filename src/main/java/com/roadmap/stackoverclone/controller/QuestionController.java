@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone.controller;
 
-import com.roadmap.stackoverclone.model.data.QuestionData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.service.impl.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,27 +15,27 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping
-    public ResponseEntity<List<QuestionData>> get() {
-        List<QuestionData> questionData = questionService.get();
+    public ResponseEntity<List<TextData>> get() {
+        List<TextData> questionData = questionService.get();
 
         return ResponseEntity.ok(questionData);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionData> find(@PathVariable("id") Long id) {
-        QuestionData result = questionService.findById(id);
+    public ResponseEntity<TextData> find(@PathVariable("id") Long id) {
+        TextData result = questionService.findById(id);
         return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
     @PostMapping
-    public ResponseEntity<QuestionData> create(@RequestBody QuestionData questionData) {
+    public ResponseEntity<TextData> create(@RequestBody TextData questionData) {
         return ResponseEntity.ok(questionService.create(questionData));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuestionData> update(
+    public ResponseEntity<TextData> update(
             @PathVariable("id") Long id,
-            @RequestBody QuestionData questionData
+            @RequestBody TextData questionData
     ) {
         return ResponseEntity.ok(questionService.update(id, questionData));
     }

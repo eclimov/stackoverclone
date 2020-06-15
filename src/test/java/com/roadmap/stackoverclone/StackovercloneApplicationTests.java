@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone;
 
-import com.roadmap.stackoverclone.configuration.ProfileConstants;
+import com.roadmap.stackoverclone.constant.ProfileConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

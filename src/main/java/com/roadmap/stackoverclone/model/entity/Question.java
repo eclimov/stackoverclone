@@ -1,5 +1,6 @@
 package com.roadmap.stackoverclone.model.entity;
 
+import com.roadmap.stackoverclone.constant.EntityConstants;
 import lombok.Getter;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 @Getter
 @Entity
-@Table(name = "questions")
+@Table(name = EntityConstants.TYPE_QUESTIONS)
 public class Question extends BaseTextEntity {
   @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.PERSIST)
   private Set<RatingQuestion> ratings = new HashSet<>();

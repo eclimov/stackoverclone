@@ -1,6 +1,6 @@
 package com.roadmap.stackoverclone.converter.entity;
 
-import com.roadmap.stackoverclone.model.data.QuestionData;
+import com.roadmap.stackoverclone.model.data.TextData;
 import com.roadmap.stackoverclone.model.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class QuestionConverterTest {
         ReflectionTestUtils.setField(question, "id", id);
         question.setText(text);
 
-        QuestionData questionData = questionConverter.convert(question);
+        TextData questionData = questionConverter.convert(question);
 
         Assert.assertEquals(questionData.getId(), id);
         Assert.assertEquals(questionData.getText(), text);

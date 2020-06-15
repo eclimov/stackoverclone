@@ -5,9 +5,11 @@ import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerTest  extends ControllerTest {
@@ -22,7 +24,7 @@ public class UserControllerTest  extends ControllerTest {
     }
 
     @Override
-    public void _create() throws Exception {
+    public void create() throws Exception {
         UserData data = this.createData();
         String json = this.generateJson(data);
 
@@ -43,12 +45,12 @@ public class UserControllerTest  extends ControllerTest {
     }
 
     @Override
-    public void _update() throws Exception {
+    public void update() throws Exception {
         UserData data = this.createData();
         String json = this.generateJson(data);
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
@@ -70,7 +72,7 @@ public class UserControllerTest  extends ControllerTest {
         ;
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.id", is(idExisting.intValue())))
@@ -79,32 +81,32 @@ public class UserControllerTest  extends ControllerTest {
     }
 
     @Override
-    public void _delete() throws Exception {
+    public void delete() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
-                .perform(delete(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.delete(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
         ;
 
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _deleteNonexistent() throws Exception {
+    public void deleteNonexistent() throws Exception {
         mockSecurityAsUser("admin.admin");
         mockMvc
-                .perform(delete(baseUrl + "/{id}", idNonexisting))
+                .perform(MockMvcRequestBuilders.delete(baseUrl + "/{id}", idNonexisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _find() throws Exception {
+    public void find() throws Exception {
         mockMvc
-                .perform(get(baseUrl + "/{id}", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
@@ -114,17 +116,17 @@ public class UserControllerTest  extends ControllerTest {
     }
 
     @Override
-    public void _findNonexistent() throws Exception {
+    public void findNonexistent() throws Exception {
         mockMvc
-                .perform(get(baseUrl + "/{id}", idNonexisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}", idNonexisting))
                 .andExpect(status().isNotFound())
         ;
     }
 
     @Override
-    public void _get() throws Exception {
+    public void get() throws Exception {
         ResultActions resultActions = mockMvc
-                .perform(get(baseUrl))
+                .perform(MockMvcRequestBuilders.get(baseUrl))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -134,9 +136,9 @@ public class UserControllerTest  extends ControllerTest {
     }
 
     @Test
-    public void _getStats() throws Exception {
+    public void getStats() throws Exception {
         ResultActions resultActions = mockMvc
-                .perform(get(baseUrl + "/{id}/stats", idExisting))
+                .perform(MockMvcRequestBuilders.get(baseUrl + "/{id}/stats", idExisting))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isMap())
